@@ -1,5 +1,9 @@
 Shader "Graph/Point Surface"
 {
+   Properties
+   {
+      _Smoothness ("Smoothness", Range(0,1)) = 0.5
+   }
    SubShader
    {
       CGPROGRAM
@@ -11,9 +15,12 @@ Shader "Graph/Point Surface"
          float3 worldPos;
       };
 
+      float _Smoothness;
+
       void ConfigureSurface (Input input, inout SurfaceOutputStandard surface)
       {
-         surface.Smoothness = 0.5;
+         surface.Albedo = input.worldPos * 0.5f + 0.5f;
+         surface.Smoothness = _Smoothness;
       }
       
       ENDCG
